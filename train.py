@@ -83,3 +83,5 @@ for epoch in range(EPOCH, cfg.epoch):
     )
     log()
 torch.save(MODEL.state_dict(), os.path.join(MODEL_DIR, "final.pt"))
+for remove in ("checkpoint.txt", "last.pt"):
+    os.remove(os.path.join(MODEL_DIR, remove))
