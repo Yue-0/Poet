@@ -55,13 +55,17 @@ def progress():
 
 if "last.pt" in os.listdir(MODEL_DIR):
     EPOCH = int(open(os.path.join(MODEL_DIR, "checkpoint.txt")).read())
+    SCHEDULER.last_epoch = EPOCH
+    OPTIMIZER.step()
+    SCHEDULER.step()
+    OPTIMIZER.zero_grad()
     MODEL.load_state_dict(torch.load(os.path.join(MODEL_DIR, "last.pt")))
 else:
-    EPOCH = 0
+    EPOCH = -1
+
 TIME = time()
 
 for epoch in range(EPOCH + 1, cfg.epoch):
-    SCHEDULER.step(epoch)
     for step, poetries in enumerate(DATA):
         poetries = torch.tensor(poetries).cuda(0)
         loss = LOSS(
@@ -72,6 +76,7 @@ for epoch in range(EPOCH + 1, cfg.epoch):
         loss.backward()
         OPTIMIZER.step()
         OPTIMIZER.zero_grad()
+    SCHEDULER.step()
     torch.save(
         MODEL.state_dict(),
         os.path.join(MODEL_DIR, "last.pt")
