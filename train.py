@@ -17,7 +17,7 @@ MODEL = RNN(
 MODEL_DIR = os.path.join("model", "parameters")
 OPTIMIZER = torch.optim.Adam(MODEL.parameters(), cfg.lr)
 SCHEDULER = torch.optim.lr_scheduler.LambdaLR(
-    OPTIMIZER, lambda e: math.cos(0.5 * epoch * math.pi / cfg.epoch)
+    OPTIMIZER, lambda e: math.cos(0.5 * e * math.pi / cfg.epoch)
 )
 if "parameters" not in os.listdir("model"):
     os.mkdir(MODEL_DIR)
