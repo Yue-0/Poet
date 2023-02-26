@@ -1,3 +1,4 @@
+from os.path import join
 from random import random
 
 import torch
@@ -6,12 +7,11 @@ import data
 import config as cfg
 from model import RNN
 
-
 __all__ = ["Poet"]
 
 
 class Poet:
-    def __init__(self, pt: int):
+    def __init__(self):
         self.rnn = RNN(
             cfg.num_layers,
             cfg.hidden_dim,
@@ -19,7 +19,9 @@ class Poet:
             data.DICTIONARY_SIZE
         )
         self.rnn.eval()
-        self.rnn.load_dict(torch.load(f"model/parameters/{pt}.pt"))
+        self.rnn.load_state_dict(
+            torch.load(join("model", "parameters", "final.pt"))
+        )
 
     def renewal(self, head: str) -> str:
         poetry = list(head)

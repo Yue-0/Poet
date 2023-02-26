@@ -1,5 +1,4 @@
 import os
-from glob import glob
 from time import time
 
 import torch
@@ -32,6 +31,8 @@ def log(head: str = "床前明月光"):
             break
         y, h = MODEL(x.reshape((1, -1)), h)
     MODEL.train()
+    with open("checkpoint.txt", "w") as output:
+        output.write(str(epoch))
     with open("log.txt", "a", encoding="utf-8") as output:
         output.write(f"Epoch: {epoch + 1}\t")
         output.write("".join(result))
@@ -48,9 +49,11 @@ def progress():
     ), end=" " * 4)
 
 
-EPOCH = len(glob(os.path.join(MODEL_DIR, "*.pt")))
-if EPOCH:
-    MODEL.load_dict(torch.load(os.path.join(MODEL_DIR, f"{EPOCH}.pt")))
+if "last.pt" in os.listdir(MODEL_DIR):
+    EPOCH = int(open(os.path.join(MODEL_DIR, "checkpoint.txt")).read())
+    MODEL.load_state_dict(torch.load(os.path.join(MODEL_DIR, "last.pt")))
+else:
+    EPOCH = 0
 TIME = time()
 
 for epoch in range(EPOCH, cfg.epoch):
@@ -64,8 +67,9 @@ for epoch in range(EPOCH, cfg.epoch):
         loss.backward()
         OPTIMIZER.step()
         OPTIMIZER.zero_grad()
-    log()
     torch.save(
         MODEL.state_dict(),
-        os.path.join(MODEL_DIR, f"{epoch + 1}.pt")
+        os.path.join(MODEL_DIR, "last.pt")
     )
+    log()
+torch.save(MODEL.state_dict(), os.path.join(MODEL_DIR, "final.pt"))

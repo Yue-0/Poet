@@ -89,10 +89,6 @@ Poet
 
 __PaddlePaddle版本无需克隆、无需配置环境、无需训练，[点击这里](https://aistudio.baidu.com/aistudio/projectdetail/5313721)即可快速体验！__
 
-1. 前往[百度AI Studio](https://aistudio.baidu.com/aistudio/projectdetail/5313721)，fork项目。
-2. 打开run.ipynb，无需训练，即可快速体验。
-3. 此外，main.ipynb提供了使用PaddlePaddle从零开始训练的全部教程。
-
 ### 2.PyTorch版本
 
 #### 1.克隆项目
@@ -121,13 +117,11 @@ pip install -r requirements.txt
 
 #### 4.开始训练
 
-开始训练前，须 __保证model/parameters文件夹里没有.pt文件，否则可能失败！__
-默认使用GPU训练。
-
 ```shell
 python train.py
 ```
 
+默认使用GPU训练。
 可以修改[config.py](config.py)中的参数来更改网络结构和训练超参数，默认参数如下：
 ```python
 lr: float = 1e-3  # 学习率
