@@ -1,4 +1,5 @@
 import os
+import math
 from time import time
 
 import torch
@@ -15,6 +16,9 @@ MODEL = RNN(
 ).cuda(0)
 MODEL_DIR = os.path.join("model", "parameters")
 OPTIMIZER = torch.optim.Adam(MODEL.parameters(), cfg.lr)
+SCHEDULER = torch.optim.lr_scheduler.LambdaLR(
+    OPTIMIZER, lambda e: math.cos(0.5 * epoch * math.pi / cfg.epoch)
+)
 if "parameters" not in os.listdir("model"):
     os.mkdir(MODEL_DIR)
 
@@ -31,11 +35,11 @@ def log(head: str = "床前明月光"):
             break
         y, h = MODEL(x.reshape((1, -1)), h)
     MODEL.train()
-    with open("checkpoint.txt", "w") as output:
-        output.write(str(epoch))
     with open("log.txt", "a", encoding="utf-8") as output:
         output.write(f"Epoch: {epoch + 1}\t")
         output.write("".join(result))
+    with open(os.path.join(MODEL_DIR, "checkpoint.txt"), "w") as output:
+        output.write(str(epoch))
 
 
 def progress():
@@ -56,7 +60,8 @@ else:
     EPOCH = 0
 TIME = time()
 
-for epoch in range(EPOCH, cfg.epoch):
+for epoch in range(EPOCH + 1, cfg.epoch):
+    SCHEDULER.step(epoch)
     for step, poetries in enumerate(DATA):
         poetries = torch.tensor(poetries).cuda(0)
         loss = LOSS(
