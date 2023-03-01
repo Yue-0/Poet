@@ -19,9 +19,9 @@ class Poet:
             data.DICTIONARY_SIZE
         )
         self.rnn.eval()
-        self.rnn.load_state_dict(
-            torch.load(join("model", "parameters", "final.pt"))
-        )
+        self.rnn.load_state_dict(torch.load(
+            join("model", "parameters", "final.pt"), torch.device("cpu")
+        ))
 
     def renewal(self, head: str) -> str:
         poetry = list(head)
