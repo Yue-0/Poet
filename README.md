@@ -6,18 +6,18 @@
 2. [效果展示](#效果展示)
 3. [文件结构](#文件结构)
 4. [快速开始](#快速开始)
-   1. [PaddlePaddle版本](#1.PaddlePaddle版本)
-   2. [PyTorch版本](#2.PyTorch版本)
+   1. [PaddlePaddle 版本](#1.PaddlePaddle版本)
+   2. [PyTorch 版本](#2.PyTorch版本)
 
 ## 简介
 
-本项目是我大二的深度学习课程期中作业，项目内容包括：
+本项目是我本科的深度学习课程作业，项目内容包括：
 * 构建一个古诗数据集；
-* 搭建一个LSTM网络；
-* 在构建的古诗数据集上训练LSTM；
-* 实现一个能够 __续写诗句__ 和 __创作藏头诗__ 的AI。
+* 搭建一个 LSTM 网络；
+* 在构建的古诗数据集上训练 LSTM；
+* 实现一个能够 __续写诗句__ 和 __创作藏头诗__ 的 AI。
 
-本项目的[PaddlePaddle版本](https://aistudio.baidu.com/aistudio/projectdetail/5313721)已经在百度AI Studio开源。
+本项目的 [PaddlePaddle 版本](https://aistudio.baidu.com/aistudio/projectdetail/5313721)已经在百度 AI Studio 开源。
 
 ## 效果展示
 
@@ -71,7 +71,8 @@
 ```
 Poet
 ├── data              # 存放数据集代码和数据
-   └── __init__.py
+   ├── poetries.txt   # 数据集
+   └── __init__.py    # 加载数据集的代码
 ├── model             # 存放网络结构代码和网络参数
    └── __init__.py
 ├── config.py         # 超参数定义文件
@@ -85,9 +86,9 @@ Poet
 
 ## 快速开始
 
-### 1.PaddlePaddle版本
+### 1.PaddlePaddle 版本
 
-__PaddlePaddle版本无需克隆、无需配置环境、无需训练，[点击这里](https://aistudio.baidu.com/aistudio/projectdetail/5313721)即可快速体验！__
+__PaddlePaddle 版本无需克隆、无需配置环境、无需训练，[点击这里](https://aistudio.baidu.com/aistudio/projectdetail/5313721)即可快速体验！__
 
 ### 2.PyTorch版本
 
@@ -108,12 +109,9 @@ cd ./Poet
 pip install -r requirements.txt
 ```
 
-#### 3.下载数据集
+#### 3.准备数据集
 
-项目数据集共包含250435首古诗，每首古诗都是五言诗或七言诗，只包含正文部分，且长度小于100个字符。
-数据集已经上传到百度AI Studio，[前往下载](https://aistudio.baidu.com/aistudio/datasetdetail/131509)。
-
-下载数据集后，请放置在data目录下。
+本项目已经提供了一个数据集，共包含 250435 首古诗，每首古诗都是五言诗或七言诗，只包含正文部分，且长度小于 100 个字符。
 
 #### 4.开始训练
 
@@ -121,8 +119,9 @@ pip install -r requirements.txt
 python train.py
 ```
 
-默认使用GPU训练。
-可以修改[config.py](config.py)中的参数来更改网络结构和训练超参数，默认参数如下：
+默认使用 GPU 训练。
+你可以修改 [config.py](config.py) 中的参数来更改网络结构和训练超参数，默认参数如下：
+
 ```python
 lr: float = 1e-3  # 学习率
 batch: int = 8    # Batch size
@@ -137,4 +136,4 @@ embedding_dim: int = 512  # 词嵌入维度
 
 #### 5.开始体验
 
-打开[main.ipynb](main.ipynb)，按照提示即可开始体验。
+打开 [main.ipynb](main.ipynb)，按照提示即可开始体验。

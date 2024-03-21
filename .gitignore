@@ -1,5 +1,5 @@
-model/parameters
-paddle
 .idea
+paddle
 log.txt
-data/poetries.txt
+__pycache__
+model/parameters
